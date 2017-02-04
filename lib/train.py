@@ -16,9 +16,7 @@ if __name__ == "__main__":
     X = []
     # f = open('./dat/training.txt')
     # f.readline()
-    data = np.genfromtxt('./dat/training.csv', dtype=float)
-    print(data)
-    Y = data[:, 0]
+    Y = np.genfromtxt('./dat/training.csv', dtype=float)
     for filename in images:
         img = crop(cv2.imread(filename))
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
