@@ -1,4 +1,5 @@
 import cv2
+import pickle
 from sklearn.preprocessing import StandardScaler
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import classification_report
@@ -35,13 +36,22 @@ class ML:
         # Test
         testPredictions = self.ann.predict(testData)
         print(classification_report(testOutput, testPredictions))
-
+    
     def predict(self, X):
         if self.ann == None:
             raise Error("Need to either load or train the ANN before using predict!")
         y = self.ann.predict(X)
-        return y[0][0]
-
+        return y[0]
+    
+    def dump(self, filepath):
+        file = open(filepath, 'w+')
+        pickle.dump(self, file)
+    
+    @staticmethod
+    def load(filepath):
+        file = open(filepath, 'r')
+        loaded = pickle.load(file)
+        return loaded
 
 if __name__ == "__main__":
     # Testing
@@ -62,3 +72,6 @@ if __name__ == "__main__":
         ])
     ml = ML()
     ml.train(X, [1, 1, 0, 0])
+    ml.dump("test.dat")
+    ml2 = ML.load("dat/test.dat")
+    print(ml2.predict([X[2]]))
