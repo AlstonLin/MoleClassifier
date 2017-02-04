@@ -21,6 +21,7 @@ def calculateAsymmetry(grayscale):
 
 if __name__ == "__main__":
     # Tests
+
     grayscale = cv2.imread("./img/malignant1.jpg")
     print(calculateAsymmetry(crop(grayscale)))
     grayscale = cv2.imread("./img/malignant2.jpg")
