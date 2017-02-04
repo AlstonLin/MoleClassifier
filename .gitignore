@@ -1,4 +1,5 @@
 *.swp
 *.bmp
+*.zip
 *.pyc
 img/dataset
