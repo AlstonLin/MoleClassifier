@@ -11,7 +11,7 @@ from jagedness import calculateJagedness
 from coloring import calculateColoring
 
 if __name__ == "__main__":
-    images = glob.glob('./img/dataset')
+    images = glob.glob('./img/dataset/')
 
     X = []
     # f = open('./dat/training.txt')
@@ -19,10 +19,9 @@ if __name__ == "__main__":
     Y = np.genfromtxt('./dat/training.csv', dtype=float)
     for filename in images:
         img = crop(cv2.imread(filename))
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         X.append([
-            calculateJagedness(gray),
-            calculateAsymmetry(gray),
+            calculateJagedness(img),
+            calculateAsymmetry(img),
             calculateColoring(img)
         ])
     cml = ML()
