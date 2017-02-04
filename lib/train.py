@@ -14,9 +14,9 @@ if __name__ == "__main__":
     images = glob.glob('./img/dataset')
 
     X = []
-    f = open('./dat/training.txt')
-    f.readline()
-    data = np.loadtxt(f, delimeter='\n')
+    # f = open('./dat/training.txt')
+    # f.readline()
+    data = np.loadtxt('./dat/training.txt', delimeter='\n')
     Y = data[:, 0]
     for filename in images:
         img = crop(cv2.imread(filename))
