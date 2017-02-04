@@ -1,15 +1,9 @@
 
-
-import border
-import color
-import pickle
 import cv2
 import numpy as np
 import os
-import assymmetry
 import sys
 sys.path.append('./cv/')
-import standardize
 import calc_jagedness
 from helper import getMoleContour
 from helper import showImage
