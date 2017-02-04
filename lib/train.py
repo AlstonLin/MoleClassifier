@@ -11,19 +11,10 @@ from jagedness import calculateJagedness
 from coloring import calculateColoring
 
 if __name__ == "__main__":
-    # Testing
-
-    # images = [
-    #     "./img/malignant1.jpg",
-    #     "./img/malignant2.jpg",
-    #     "./img/benign1.jpg",
-    #     "./img/benign2.jpg"
-    # ]
-
-    images = glob.glob('./tests/')
+    images = glob.glob('./img/dataset')
 
     X = []
-    f = open('./training.txt')
+    f = open('./dat/training.txt')
     f.readline()
     data = np.loadtxt(f)
     Y = data[:, 0]
@@ -37,6 +28,6 @@ if __name__ == "__main__":
         ])
     cml = ML()
     cml.train(X, Y)
-    cml.dump("test.dat")
-    cml2 = ML.load("dat/test.dat")
+    cml.dump("./dat/trained.dat")
+    cml2 = ML.load("./dat/trained.dat")
     print(cml2.predict([X[2]]))
