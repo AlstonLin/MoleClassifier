@@ -22,8 +22,8 @@ def calculateJagedness(image, debug=False):
                 (contour[i][0][1] - center[1]) * math.sin(-theta)
         diffY = (contour[i][0][0] - center[0]) * math.sin(-theta) - \
                 (contour[i][0][1] - center[1]) * math.cos(-theta)
-        meanSquare += abs((diffX / dim[0]) ** 2 + (diffY / dim[1]) ** 2)
-    return meanSquare
+        meanSquare += abs(diffX ** 2 + diffY ** 2)
+    return meanSquare / (dim[0] * dim[1])
 
 if __name__ == "__main__":
     # Tests
