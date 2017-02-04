@@ -16,7 +16,7 @@ if __name__ == "__main__":
     X = []
     f = open('./dat/training.txt')
     f.readline()
-    data = np.loadtxt(f)
+    data = np.loadtxt(f, delimeter='\n')
     Y = data[:, 0]
     for filename in images:
         img = crop(cv2.imread(filename))

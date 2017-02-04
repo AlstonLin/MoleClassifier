@@ -12,7 +12,7 @@ class ML:
     def __init__(self):
         self.scaler = StandardScaler()
         self.ann = None
-    
+
     """
     The format of X should be a 2D array.
     Eg. [[a1, b1], [a2, b2], [a3, b3]] is the input for a dataset with 3 samples and 2 features
@@ -36,17 +36,17 @@ class ML:
         # Test
         testPredictions = self.ann.predict(testData)
         print(classification_report(testOutput, testPredictions))
-    
+
     def predict(self, X):
         if self.ann == None:
             raise Error("Need to either load or train the ANN before using predict!")
         y = self.ann.predict(X)
         return y[0]
-    
+
     def dump(self, filepath):
         file = open(filepath, 'w+')
         pickle.dump(self, file)
-    
+
     @staticmethod
     def load(filepath):
         file = open(filepath, 'r')
