@@ -1,6 +1,7 @@
 import cv2
 import math
 import helper
+from crop import crop
 
 def calculateJagedness(image, debug=False):
     # Contours
@@ -26,12 +27,13 @@ def calculateJagedness(image, debug=False):
     return meanSquare / (dim[0] * dim[1])
 
 if __name__ == "__main__":
-    # Tests
-    grayscale = cv2.imread("./img/malignant1.jpg", 0)
-    print(calculateJagedness(grayscale, debug=True))
-    grayscale = cv2.imread("./img/malignant2.jpg", 0)
-    print(calculateJagedness(grayscale, debug=True))
-    grayscale = cv2.imread("./img/benign1.jpg", 0)
-    print(calculateJagedness(grayscale, debug=True))
-    grayscale = cv2.imread("./img/benign2.jpg", 0)
-    print(calculateJagedness(grayscale, debug=True))
+    files = [
+        "./img/malignant1.jpg",
+        "./img/malignant2.jpg",
+        "./img/benign1.jpg",
+        "./img/benign2.jpg"
+    ]
+    for filename in files:
+        image = crop(cv2.imread(filename))
+        grayscale = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        print(calculateJagedness(grayscale))

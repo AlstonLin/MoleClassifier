@@ -11,21 +11,23 @@ from jagedness import calculateJagedness
 from coloring import calculateColoring
 
 if __name__ == "__main__":
-    images = glob.glob('./img/dataset')
+    images = glob.glob('./img/dataset/*')
 
     X = []
-    # f = open('./dat/training.txt')
-    # f.readline()
     Y = np.genfromtxt('./dat/training.csv', dtype=float)
     for filename in images:
-        img = crop(cv2.imread(filename))
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        X.append([
-            calculateJagedness(gray),
-            calculateAsymmetry(gray),
-            calculateColoring(img)
-        ])
+        try:
+            img = crop(cv2.imread(filename))
+            gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            X.append([
+                calculateJagedness(gray),
+                calculateAsymmetry(gray),
+                calculateColoring(img)
+            ])
+        except Exception:
+            print("ERROR processing ", filename)
     cml = ML()
+    print(X)
     cml.train(X, Y)
     cml.dump("./dat/trained.dat")
     cml2 = ML.load("./dat/trained.dat")

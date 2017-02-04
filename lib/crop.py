@@ -5,6 +5,7 @@ from helper import showImage
 
 def crop(image):
     PADDING = 25
+    image = cv2.GaussianBlur(image, (1, 1), 0)
     grayscale = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     contour = getMoleContour(grayscale)
     x, y, w, h = cv2.boundingRect(contour)
