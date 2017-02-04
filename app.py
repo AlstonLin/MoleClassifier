@@ -18,14 +18,16 @@ from sklearn.naive_bayes import GaussianNB, MultinomialNB
 from sklearn import svm
 
 def find_mole(origimage):
-    image = cv2.imread(origimage)
-    image_blur = cv2.blur(image, (5, 5))
-    image_greyscale = cv2.cvtColor(image_blur, cv2.COLOR_BGR2GRAY)
-    image_contour = getMoleContour(image_greyscale)
-    max_dimension = max(image.shape)
-    scale = 700/max_dimension
-    image = cv2.resize(image, None, fx=scale, fy=scale)
+    image = cv2.imread(origimage, 0)
+    # # image_blur = cv2.blur(image, (5, 5))
+    # image_greyscale = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    image_contour = getMoleContour(image)
+    # max_dimension = max(image.shape)
+    # scale = 700/max_dimension
+    # image = cv2.resize(image, None, fx=scale, fy=scale)
+    # R = boundingRect(image_contour); ## Get bounding box for contour i
+    # ROI = cv2.minAreaRect(R)
+    # showImage(image)
 
-    showImage(image_contour)
 
-find_mole('./img/malignant.jpg')
+find_mole('./img/malignant1.jpg')

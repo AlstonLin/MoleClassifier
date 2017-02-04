@@ -3,7 +3,7 @@ import math
 import helper
 
 def calculateJagedness(image, debug=False):
-    # Contours    
+    # Contours
     contour = helper.getMoleContour(image)
     # Fits an ellipse around the image
     ellipse = cv2.fitEllipse(contour)
