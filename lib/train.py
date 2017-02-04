@@ -16,7 +16,7 @@ if __name__ == "__main__":
     X = []
     # f = open('./dat/training.txt')
     # f.readline()
-    data = np.genfromtxt('./dat/training.txt', dtype=float)
+    data = np.genfromtxt('./dat/training.csv', dtype=float)
     print(data)
     Y = data[:, 0]
     for filename in images:
