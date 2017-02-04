@@ -17,6 +17,7 @@ if __name__ == "__main__":
     # f = open('./dat/training.txt')
     # f.readline()
     data = np.genfromtxt('./dat/training.txt', dtype=float)
+    print(data)
     Y = data[:, 0]
     for filename in images:
         img = crop(cv2.imread(filename))
