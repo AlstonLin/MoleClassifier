@@ -1,10 +1,11 @@
 from flask import Flask, jsonify, request, abort, url_for
+import os
 from werkzeug.utils import secure_filename
 import cv2
 import tempfile
 app = Flask(__name__)
 
-UPLOAD_FOLDER = './img/upload'
+UPLOAD_FOLDER = './img/upload/'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -20,9 +21,9 @@ def hello_world():
 @app.route('/predict', methods=['POST'])
 def upload_file():
     print(request.files['file'])
-    # if 'file' not in request.files['file']:
-    #     print("File not found")
-    #     abort(400)
+    if 'file' not in request.files:
+        print("File not found")
+        abort(400)
     file = request.files['file']
     # if user does not select file, browser also
     # submit a empty part without filename
@@ -32,9 +33,8 @@ def upload_file():
     if file and allowed_file(file.filename):
         tempFile = tempfile.TemporaryFile()
         filename = secure_filename(file.filename)
-        tmpImag = open(tempFile.name, 'wb')
-        tmpImag.write(file.read())
-        cv2.cvtColor(tmpImag, cv2.COLOR_BGR2RGB)
+        tempFile.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        gg = cv2.imread(file.read())
         return '500'
 
 
