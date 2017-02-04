@@ -12,7 +12,7 @@ from coloring import calculateColoring
 
 if __name__ == "__main__":
     images = glob.glob('./img/dataset/')
-
+    images = sorted(images)
     X = []
     # f = open('./dat/training.txt')
     # f.readline()
