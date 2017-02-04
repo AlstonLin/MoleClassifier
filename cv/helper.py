@@ -5,7 +5,6 @@ def getMoleContour(greyscale):
     THRESHOLD = 125
     MAX_VALUE = 180
     ret, thresh = cv2.threshold(greyscale, THRESHOLD, MAX_VALUE, cv2.THRESH_BINARY_INV) # Binary mask
-    showImage(thresh)
     im2, contours, hierarchy = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     # Check to make sure there actually is a contour
     if len(contours) == 0:
