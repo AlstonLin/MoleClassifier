@@ -31,11 +31,15 @@ def upload_file():
         print("File has no name")
         abort(400)
     if file and allowed_file(file.filename):
-        tempFile = tempfile.TemporaryFile()
-        filename = secure_filename(file.filename)
-        tempFile.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         gg = cv2.imread(file.read())
-        return '500'
+        # TODO: Send an actual response
+        response = {
+            "likelihood": 82,
+            "asymmetry": 120,
+            "jagedness": 167,
+            "coloring": 20
+        }
+        return jsonify(response)
 
 
 if __name__ == "__main__":
