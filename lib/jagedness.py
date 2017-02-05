@@ -30,6 +30,7 @@ def calculateJagedness(image, debug=False):
 
 if __name__ == "__main__":
     files = [
+        "./img/dataset/IMD411.bmp",
         "./img/malignant1.jpg",
         "./img/malignant2.jpg",
         "./img/benign1.jpg",
@@ -38,4 +39,4 @@ if __name__ == "__main__":
     for filename in files:
         image = crop(cv2.imread(filename))
         grayscale = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        print(calculateJagedness(grayscale))
+        print(calculateJagedness(grayscale, debug=True))

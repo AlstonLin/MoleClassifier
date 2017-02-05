@@ -20,7 +20,7 @@ class ML:
     """
     def train(self, X, y):
         # Data sets
-        TEST_PCT = 0.3
+        TEST_PCT = 0.2
         trainSize = int(len(X) * (1 - TEST_PCT))
         trainData = X[0:trainSize]
         trainTarget = y[0:trainSize]
@@ -31,7 +31,13 @@ class ML:
         trainData = self.scaler.transform(trainData)
         testData = self.scaler.transform(testData)
         # Neural Network
-        self.ann = MLPClassifier(hidden_layer_sizes=(10))
+        self.ann = MLPClassifier(
+            hidden_layer_sizes=(20),
+            alpha=0.001,
+            learning_rate_init=0.01,
+            verbose=True,
+            max_iter=5000
+        )
         self.ann.fit(trainData, trainTarget)
         # Test
         testPredictions = self.ann.predict(testData)
