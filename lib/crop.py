@@ -12,12 +12,9 @@ def crop(image):
     cv2.drawContours(grayscale, contour, -1, (255, 255, 255), 5)
     x, y, w, h = cv2.boundingRect(contour)
     padding = MAX_PADDING if x > MAX_PADDING and y > MAX_PADDING else min(x, y)
-    print(padding)
     padding = padding if x + w + padding * 2 > imageW and y + h + padding * 2 > imageH else 0
     x -= padding
     y -= padding
-    print(padding)
-    print((x, y))
     if w < padding * 2 and h < padding * 2:
         raise Error("Picture is waay too small!!!")
     return image[y:y+h+padding*2,x:x+w+padding*2]

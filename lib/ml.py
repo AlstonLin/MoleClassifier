@@ -13,6 +13,10 @@ class ML:
     def __init__(self):
         self.scaler = StandardScaler()
         self.ann = None
+        self.numTrained = 0
+        self.totalJagedness = 0
+        self.totalAsymmetry = 0
+        self.totalColoring = 0
 
     """
     The format of X should be a 2D array.
@@ -21,42 +25,67 @@ class ML:
     """
     def train(self, X, y):
         # Data sets
-        TEST_PCT = 0.15
+        TEST_PCT = 0.25 # Of the non-cv data
+        CV_PCT = 0.1
         trainData = []
         trainTarget = []
         testData = [] 
         testTarget = []
+        cvData = [] 
+        cvTarget = []
         # Assigns data points randomly to each data set
         for i in range(len(X)):
-            if random.random() >= TEST_PCT:
+            if random.random() >= CV_PCT:
                 trainData.append(X[i])
                 trainTarget.append(y[i])
+                if random.random() <= TEST_PCT:
+                    testData.append(X[i])
+                    testTarget.append(y[i])
             else:
-                testData.append(X[i])
-                testTarget.append(y[i])
+                cvData.append(X[i])
+                cvTarget.append(y[i])
+        # Saves sums
+        self.numTrained = len(trainData)
+        for x in trainData:
+            self.totalJagedness += x[0]
+            self.totalAsymmetry += x[1]
+            self.totalColoring += x[2]
         # Scales data
         self.scaler.fit(trainData)
         trainData = self.scaler.transform(trainData)
         testData = self.scaler.transform(testData)
+        cvData = self.scaler.transform(cvData)
         # Neural Network
         self.ann = MLPClassifier(
-            hidden_layer_sizes=(20),
-            alpha=0.001,
-            learning_rate_init=0.01,
+            activation="relu",
+            hidden_layer_sizes=(18),
+            alpha=0.00125,
+            learning_rate_init=0.02,
             verbose=True,
-            max_iter=5000
+            max_iter=1000
         )
         self.ann.fit(trainData, trainTarget)
         # Test
+        print(">>>>>>>>>>>>>>> TEST RESULTS <<<<<<<<<<<<<<<<<<<")
         testPredictions = self.ann.predict(testData)
         print(classification_report(testTarget, testPredictions))
-
+        print(">>>>>>>>>>> CROSS VALIDATION RESULTS <<<<<<<<<<<")
+        cvPredictions = self.ann.predict(cvData)
+        print(classification_report(cvTarget, cvPredictions))
     def predict(self, X):
         if self.ann == None:
             raise Error("Need to either load or train the ANN before using predict!")
+        X = self.scaler.transform(X)
         y = self.ann.predict(X)
         return y[0]
 
+    def predictProbability(self, X):
+        if self.ann == None:
+            raise Error("Need to either load or train the ANN before using predict!")
+        X = self.scaler.transform(X)
+        y = self.ann.predict_proba(X)
+        return y[0][1]
+    
     def dump(self, filepath):
         file = open(filepath, 'w+')
         pickle.dump(self, file)
@@ -88,4 +117,3 @@ if __name__ == "__main__":
     ml.train(X, [1, 1, 0, 0])
     ml.dump("test.dat")
     ml2 = ML.load("dat/test.dat")
-    print(ml2.predict([X[2]]))

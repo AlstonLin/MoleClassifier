@@ -27,8 +27,7 @@ if __name__ == "__main__":
         except Exception:
             print("ERROR processing ", filename)
     cml = ML()
-    print(X)
     cml.train(X, Y)
     cml.dump("./dat/trained.dat")
     cml2 = ML.load("./dat/trained.dat")
-    print(cml2.predict([X[2]]))
+    print(cml2.predictProbability([X[2]]))
