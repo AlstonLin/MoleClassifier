@@ -11,7 +11,7 @@ from jagedness import calculateJagedness
 from coloring import calculateColoring
 
 if __name__ == "__main__":
-    images = glob.glob('./img/dataset/')
+    images = glob.glob('./img/dataset/*')
     images = sorted(images)
     X = []
     Y = np.genfromtxt('./dat/training.csv', dtype=float)
