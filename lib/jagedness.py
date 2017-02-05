@@ -30,7 +30,7 @@ def calculateJagedness(image, debug=False):
 
 if __name__ == "__main__":
     files = [
-        "./img/dataset/IMD411.bmp",
+        "./img/dataset/IMD080.bmp",
         "./img/malignant1.jpg",
         "./img/malignant2.jpg",
         "./img/benign1.jpg",

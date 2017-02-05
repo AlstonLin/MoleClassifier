@@ -18,6 +18,7 @@ def calculateAsymmetry(grayscale):
 if __name__ == "__main__":
     # Tests
     files = [
+        "./img/dataset/IMD347.bmp",
         "./img/malignant1.jpg",
         "./img/malignant2.jpg",
         "./img/benign1.jpg",
@@ -25,5 +26,6 @@ if __name__ == "__main__":
     ]
     for filename in files:
         image = crop(cv2.imread(filename))
+        helper.showImage(image)
         grayscale = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         print(calculateAsymmetry(grayscale))

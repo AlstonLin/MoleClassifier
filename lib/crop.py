@@ -4,23 +4,39 @@ from helper import getMoleContour
 from helper import showImage
 
 def crop(image):
-    PADDING = 25
-    image = cv2.GaussianBlur(image, (1, 1), 0)
+    imageH, imageW, _ = image.shape
+    MAX_PADDING = 7
+    # image = cv2.GaussianBlur(image, (1, 1), 0)
     grayscale = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     contour = getMoleContour(grayscale)
+    cv2.drawContours(grayscale, contour, -1, (255, 255, 255), 5)
     x, y, w, h = cv2.boundingRect(contour)
-    x -= PADDING
-    y -= PADDING
-    if w < PADDING * 2 and h < PADDING * 2:
+    padding = MAX_PADDING if x > MAX_PADDING and y > MAX_PADDING else min(x, y)
+    print(padding)
+    cv2.rectangle(grayscale,(x,y),(x+w,y+h),(0,255,0),2)
+    showImage(grayscale)
+    padding = padding if x + w + padding * 2 > imageW and y + h + padding * 2 > imageH else 0
+    x -= padding
+    y -= padding
+    print(padding)
+    print((x, y))
+    if w < padding * 2 and h < padding * 2:
         raise Error("Picture is waay too small!!!")
-    return image[y:y+h+PADDING*2,x:x+w+PADDING*2]
+    return image[y:y+h+padding*2,x:x+w+padding*2]
 
 if __name__ == "__main__":
+    image = cv2.imread('./img/dataset/IMD347.bmp')
+    showImage(image)
+    showImage(crop(image))
     image = cv2.imread('./img/malignant1.jpg')
+    showImage(image)
     showImage(crop(image))
     image = cv2.imread('./img/malignant2.jpg')
+    showImage(image)
     showImage(crop(image))
     image = cv2.imread('./img/benign1.jpg')
+    showImage(image)
     showImage(crop(image))
     image = cv2.imread('./img/benign2.jpg')
+    showImage(image)
     showImage(crop(image))
