@@ -24,6 +24,8 @@ def calculateJagedness(image, debug=False):
         diffY = (contour[i][0][0] - center[0]) * math.sin(-theta) - \
                 (contour[i][0][1] - center[1]) * math.cos(-theta)
         meanSquare += abs(diffX ** 2 + diffY ** 2)
+    if dim[0] == 0 or dim[1] == 0:
+        raise Error("Can't find ellipse of best fit")
     return meanSquare / (dim[0] * dim[1])
 
 if __name__ == "__main__":
