@@ -1,4 +1,5 @@
 import cv2
+import random
 import pickle
 from sklearn.preprocessing import StandardScaler
 from sklearn.neural_network import MLPClassifier
@@ -20,12 +21,19 @@ class ML:
     """
     def train(self, X, y):
         # Data sets
-        TEST_PCT = 0.2
-        trainSize = int(len(X) * (1 - TEST_PCT))
-        trainData = X[0:trainSize]
-        trainTarget = y[0:trainSize]
-        testData = X[trainSize:-1]
-        testOutput = y[trainSize:-1]
+        TEST_PCT = 0.15
+        trainData = []
+        trainTarget = []
+        testData = [] 
+        testTarget = []
+        # Assigns data points randomly to each data set
+        for i in range(len(X)):
+            if random.random() >= TEST_PCT:
+                trainData.append(X[i])
+                trainTarget.append(y[i])
+            else:
+                testData.append(X[i])
+                testTarget.append(y[i])
         # Scales data
         self.scaler.fit(trainData)
         trainData = self.scaler.transform(trainData)
@@ -41,7 +49,7 @@ class ML:
         self.ann.fit(trainData, trainTarget)
         # Test
         testPredictions = self.ann.predict(testData)
-        print(classification_report(testOutput, testPredictions))
+        print(classification_report(testTarget, testPredictions))
 
     def predict(self, X):
         if self.ann == None:
