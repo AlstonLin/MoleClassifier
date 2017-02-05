@@ -18,7 +18,7 @@ def calculateAsymmetry(grayscale):
 if __name__ == "__main__":
     # Tests
     files = [
-        "./img/dataset/IMD347.bmp",
+        "./img/dataset/IMD348.bmp",
         "./img/malignant1.jpg",
         "./img/malignant2.jpg",
         "./img/benign1.jpg",

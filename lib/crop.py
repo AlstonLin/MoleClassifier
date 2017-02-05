@@ -13,8 +13,6 @@ def crop(image):
     x, y, w, h = cv2.boundingRect(contour)
     padding = MAX_PADDING if x > MAX_PADDING and y > MAX_PADDING else min(x, y)
     print(padding)
-    cv2.rectangle(grayscale,(x,y),(x+w,y+h),(0,255,0),2)
-    showImage(grayscale)
     padding = padding if x + w + padding * 2 > imageW and y + h + padding * 2 > imageH else 0
     x -= padding
     y -= padding
@@ -25,7 +23,7 @@ def crop(image):
     return image[y:y+h+padding*2,x:x+w+padding*2]
 
 if __name__ == "__main__":
-    image = cv2.imread('./img/dataset/IMD347.bmp')
+    image = cv2.imread('./img/dataset/IMD348.bmp')
     showImage(image)
     showImage(crop(image))
     image = cv2.imread('./img/malignant1.jpg')
